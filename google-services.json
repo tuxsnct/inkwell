@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "833783763015",
+    "project_id": "tuxsnct-inkwell",
+    "storage_bucket": "tuxsnct-inkwell.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:833783763015:android:370c67f9892bbd50aae162",
+        "android_client_info": {
+          "package_name": "com.tuxsnct.inkwell"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "833783763015-hh9mkv68n0f8gvlme2m1g2otlf711jbf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDij6VXCZJam9YMmMK0maeyzQTHB1P8hgc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "833783763015-hh9mkv68n0f8gvlme2m1g2otlf711jbf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
