@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "833783763015-kjam7lgfhngfmtie4mrnp4irsge0oh20.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tuxsnct.inkwell",
+            "certificate_hash": "1af8497c7b32b91c30c9fc542b1d71fbb65cedd5"
+          }
+        },
+        {
           "client_id": "833783763015-hh9mkv68n0f8gvlme2m1g2otlf711jbf.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -20,9 +20,9 @@ import com.tuxsnct.inkwell.utils.CompletePreviews
 @Composable
 fun EditorScreen(
     isCompact: Boolean,
-    navigateToManager: () -> Unit
+    navigateToManager: () -> Unit,
+    editorViewModel: EditorViewModel = hiltViewModel()
 ) {
-    val editorViewModel: EditorViewModel = hiltViewModel()
     var fileName by remember { mutableStateOf("") }
 
     editorViewModel.file.observe(LocalLifecycleOwner.current) {
@@ -44,11 +44,11 @@ fun EditorScreen(
 @CompletePreviews
 @Composable
 fun CompactEditorScreenPreview() {
-    EditorScreen(true) {}
+    EditorScreen(true, {})
 }
 
 @CompletePreviews
 @Composable
 fun ExpandedEditorScreenPreview() {
-    EditorScreen(false) {}
+    EditorScreen(false, {})
 }

@@ -8,9 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.tuxsnct.inkwell.ui.components.settings.SettingsAppBar
-import com.tuxsnct.inkwell.ui.viewmodels.SettingsViewModel
 import com.tuxsnct.inkwell.utils.CompletePreviews
 
 @Composable
@@ -18,8 +16,6 @@ fun SettingsScreen(
     isCompact: Boolean,
     onClickBack: () -> Unit
 ) {
-    val settingsViewModel: SettingsViewModel = hiltViewModel()
-
     Scaffold(
         topBar = { SettingsAppBar { onClickBack() } }
     ) { contentPadding ->

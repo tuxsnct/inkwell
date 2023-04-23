@@ -7,32 +7,32 @@ import com.tuxsnct.inkwell.ui.viewmodels.SettingsViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import dagger.hilt.android.components.ActivityRetainedComponent
+import dagger.hilt.android.scopes.ActivityRetainedScoped
 
 @Module
-@InstallIn(SingletonComponent::class)
-internal object AppModule {
+@InstallIn(ActivityRetainedComponent::class)
+object AppActivityModule {
     @Provides
-    @Singleton
+    @ActivityRetainedScoped
     fun provideEditorViewModel(): EditorViewModel {
         return EditorViewModel()
     }
 
     @Provides
-    @Singleton
+    @ActivityRetainedScoped
     fun provideManagerViewModel(): ManagerViewModel {
         return ManagerViewModel()
     }
 
     @Provides
-    @Singleton
+    @ActivityRetainedScoped
     fun provideSearchViewModel(): SearchViewModel {
         return SearchViewModel()
     }
 
     @Provides
-    @Singleton
+    @ActivityRetainedScoped
     fun provideSettingsViewModel(): SettingsViewModel {
         return SettingsViewModel()
     }

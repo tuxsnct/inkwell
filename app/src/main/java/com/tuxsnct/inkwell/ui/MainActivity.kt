@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             InkWellApp(
-                calculateWindowSizeClass(this).widthSizeClass == WindowWidthSizeClass.Compact,
+                calculateWindowSizeClass(this).widthSizeClass == WindowWidthSizeClass.Compact
             )
         }
     }
