@@ -21,12 +21,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.tuxsnct.inkwell.model.AppSpecificFile
-import com.tuxsnct.inkwell.model.FileType
 import com.tuxsnct.inkwell.model.Folder
 import com.tuxsnct.inkwell.model.Note
 import com.tuxsnct.inkwell.model.Template
-import java.util.UUID
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

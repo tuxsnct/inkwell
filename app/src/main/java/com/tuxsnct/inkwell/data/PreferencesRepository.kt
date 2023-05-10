@@ -9,7 +9,7 @@ class PreferencesRepository @Inject constructor(
     @ApplicationContext context: Context
 ) {
     private val preferences: SharedPreferences = context.getSharedPreferences("inkwell", Context.MODE_PRIVATE)
-    private lateinit var listener: SharedPreferences.OnSharedPreferenceChangeListener;
+    private lateinit var listener: SharedPreferences.OnSharedPreferenceChangeListener
 
     fun setPreference(key: String, value: String) {
         preferences.edit().putString(key, value).apply()
