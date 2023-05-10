@@ -19,7 +19,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.tuxsnct.inkwell.model.AppSpecificFile
+import com.tuxsnct.inkwell.model.FileType
+import com.tuxsnct.inkwell.model.Folder
+import com.tuxsnct.inkwell.model.Note
+import com.tuxsnct.inkwell.model.Template
+import java.util.UUID
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -27,6 +34,8 @@ fun ManagerBottomSheet(
     sheetState: SheetState,
     onDismissRequest: () -> Unit
 ) {
+    val context = LocalContext.current
+
     ModalBottomSheet(
         sheetState = sheetState,
         onDismissRequest = onDismissRequest
@@ -39,14 +48,20 @@ fun ManagerBottomSheet(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             FilledTonalButton(
-                onClick = { /* TODO */ },
+                onClick = {
+                    val note = Note.create(context, null)
+                    println(note.file.absolutePath)
+                },
             ) {
                 Icon(Icons.Default.Book, contentDescription = "Note")
                 Spacer(modifier = Modifier.width(16.dp))
                 Text("Note")
             }
             FilledTonalButton(
-                onClick = { /* TODO */ },
+                onClick = {
+                    val template = Template.create(context, null)
+                    println(template.file.absolutePath)
+                },
             ) {
                 Icon(Icons.Default.Description, contentDescription = "Template")
                 Spacer(modifier = Modifier.width(16.dp))
@@ -54,7 +69,10 @@ fun ManagerBottomSheet(
                 Text("Template")
             }
             FilledTonalButton(
-                onClick = { /* TODO */ },
+                onClick = {
+                    val folder = Folder.create(Note.getNotesDir(context), null, null)
+                    println(folder.file.absolutePath)
+                },
             ) {
                 Icon(Icons.Default.Folder, contentDescription = "Folder")
                 Spacer(modifier = Modifier.width(16.dp))

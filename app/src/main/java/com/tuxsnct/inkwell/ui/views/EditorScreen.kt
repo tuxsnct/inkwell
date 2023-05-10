@@ -26,8 +26,7 @@ fun EditorScreen(
     var fileName by remember { mutableStateOf("") }
 
     editorViewModel.file.observe(LocalLifecycleOwner.current) {
-        println(it?.path)
-        fileName = "${it?.type?.name} ${it?.path}"
+        fileName = "${it?.type?.name} ${it?.file?.nameWithoutExtension}"
     }
 
     Scaffold(

@@ -3,15 +3,16 @@ package com.tuxsnct.inkwell.ui.components.manager
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
-import com.tuxsnct.inkwell.model.File
+import com.tuxsnct.inkwell.model.AppSpecificFile
 import com.tuxsnct.inkwell.model.Note
 import com.tuxsnct.inkwell.utils.CompletePreviews
 
@@ -22,7 +23,7 @@ fun ManagerFileItem(
     navigateToEditor: () -> Unit
 ) {
     Card (
-        modifier = Modifier.aspectRatio(1f),
+        modifier = Modifier.aspectRatio(1f).semantics(mergeDescendants = true) {},
         onClick = navigateToEditor
     ) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -33,8 +34,8 @@ fun ManagerFileItem(
 
 @Composable
 fun ManagerFilesGrid(
-    files: List<File>,
-    navigateToEditor: (File) -> Unit
+    files: List<AppSpecificFile>,
+    navigateToEditor: (AppSpecificFile) -> Unit
 ) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(minSize = 150.dp),
@@ -42,8 +43,9 @@ fun ManagerFilesGrid(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        items(files) {
-            ManagerFileItem("${it.type} ${it.path}") { navigateToEditor(it) }
+        items(files.size) {
+            val file = files[it]
+            ManagerFileItem("${file.type} ${file.name}") { navigateToEditor(files[it]) }
         }
     }
 }
@@ -52,7 +54,7 @@ fun ManagerFilesGrid(
 @Composable
 fun ManagerFilesGridPreview() {
     val files = (1..10).map {
-        Note("$it")
+        Note(LocalContext.current.filesDir, "$it")
     }
     ManagerFilesGrid(files) {}
 }

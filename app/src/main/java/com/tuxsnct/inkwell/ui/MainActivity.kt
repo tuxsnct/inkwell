@@ -16,9 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
-            installSplashScreen()
-        }
+        installSplashScreen()
 
         super.onCreate(savedInstanceState)
 
