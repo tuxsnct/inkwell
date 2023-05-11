@@ -2,8 +2,8 @@ ext {
     extra["kotlin_version"] = "1.8.10"
     extra["hilt_version"] = "2.45"
     extra["compose_compiler_version"] = "1.4.3"
-    extra["compose_material3_version"] = "1.1.0-alpha07"
-    extra["compose_ui_version"] = "1.5.0-alpha02"
+    extra["compose_material3_version"] = "1.2.0-alpha01"
+    extra["compose_ui_version"] = "1.5.0-alpha04"
 }
 
 buildscript {
