@@ -3,14 +3,14 @@ package com.tuxsnct.inkwell.model
 import java.io.File
 import java.util.UUID
 
-enum class FileType {
-    NOTE,
-    TEMPLATE,
-    FOLDER
-}
-
 abstract class AppSpecificFile {
-    abstract val type: FileType
+    enum class AppSpecificFileType {
+        NOTE,
+        TEMPLATE,
+        FOLDER
+    }
+
+    abstract val type: AppSpecificFileType
     lateinit var file: File
     lateinit var uuid: UUID
     lateinit var name: String
@@ -22,21 +22,24 @@ abstract class AppSpecificFile {
     abstract fun rename(newName: String)
 
     companion object {
-        fun load(file: File): AppSpecificFile {
-            val name = file.nameWithoutExtension
-            val type = when (file.extension) {
-                "iwnote" -> FileType.NOTE
-                "iwtmpl" -> FileType.TEMPLATE
+        private fun detectFileType(file: File): AppSpecificFileType {
+            return when (file.extension) {
+                "iwnote" -> AppSpecificFileType.NOTE
+                "iwtmpl" -> AppSpecificFileType.TEMPLATE
                 else -> {
-                    if (file.isDirectory) FileType.FOLDER
+                    if (file.isDirectory) AppSpecificFileType.FOLDER
                     else throw IllegalArgumentException("Invalid file type")
                 }
             }
+        }
 
-            return when (type) {
-                FileType.NOTE -> Note(file, name)
-                FileType.TEMPLATE -> Template(file, name)
-                FileType.FOLDER -> Folder(file, name, "#000000")
+        fun load(file: File): AppSpecificFile {
+            val name = file.nameWithoutExtension
+
+            return when (detectFileType(file)) {
+                AppSpecificFileType.NOTE -> Note(file, name)
+                AppSpecificFileType.TEMPLATE -> Template(file, name)
+                AppSpecificFileType.FOLDER -> Folder(file, name, "#000000")
             }
         }
     }

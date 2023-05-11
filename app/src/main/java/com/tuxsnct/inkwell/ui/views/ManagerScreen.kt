@@ -56,7 +56,7 @@ fun ManagerScreen(
     }
 
     var openBottomSheet by rememberSaveable { mutableStateOf(false) }
-    val sheetState = rememberSheetState()
+    val modalBottomSheetState = rememberModalBottomSheetState()
 
     Scaffold(
         topBar = { ManagerAppBar(isCompact, navigateToSearch, navigateToSettings) },
@@ -86,7 +86,7 @@ fun ManagerScreen(
     }
 
     if (openBottomSheet) {
-        ManagerBottomSheet(sheetState = sheetState) {
+        ManagerBottomSheet(sheetState = modalBottomSheetState) {
             openBottomSheet = false
         }
     }

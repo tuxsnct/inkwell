@@ -8,7 +8,7 @@ class Folder(
     name: String,
     color: String
 ) : AppSpecificFile() {
-    override val type: FileType = FileType.FOLDER
+    override val type: AppSpecificFileType = AppSpecificFileType.FOLDER
     var color: String
 
     init {

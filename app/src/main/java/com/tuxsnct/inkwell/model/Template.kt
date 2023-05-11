@@ -8,7 +8,7 @@ class Template(
     file: File,
     name: String?
 ) : AppSpecificFile() {
-    override val type: FileType = FileType.TEMPLATE
+    override val type: AppSpecificFileType = AppSpecificFileType.TEMPLATE
 
     init {
         this.file = file

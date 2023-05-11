@@ -1,4 +1,4 @@
-package com.tuxsnct.inkwell.model
+package com.tuxsnct.inkwell.di
 
 import com.tuxsnct.inkwell.ui.viewmodels.EditorViewModel
 import com.tuxsnct.inkwell.ui.viewmodels.ManagerViewModel

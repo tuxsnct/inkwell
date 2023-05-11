@@ -8,7 +8,7 @@ class Note(
     file: File,
     name: String?
 ) : AppSpecificFile() {
-    override val type: FileType = FileType.NOTE
+    override val type: AppSpecificFileType = AppSpecificFileType.NOTE
 
     init {
         this.file = file
