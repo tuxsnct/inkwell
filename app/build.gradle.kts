@@ -23,7 +23,7 @@ android {
 
     defaultConfig {
         applicationId = "com.tuxsnct.inkwell"
-        minSdk = 30
+        minSdk = 28
         targetSdk = 33
         versionCode = 16
         versionName = "1.0"
@@ -91,6 +91,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview:${rootProject.extra["compose_ui_version"]}")
     implementation("androidx.compose.material3:material3:${rootProject.extra["compose_material3_version"]}")
     implementation("androidx.compose.material3:material3-window-size-class:${rootProject.extra["compose_material3_version"]}")
+    implementation("androidx.compose.material:material:${rootProject.extra["compose_ui_version"]}")
     implementation("androidx.compose.material:material-icons-extended:${rootProject.extra["compose_ui_version"]}")
     implementation("com.google.android.gms:play-services-auth:20.5.0")
     implementation("com.google.android.gms:play-services-oss-licenses:17.0.1")
@@ -102,10 +103,9 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics-ktx:21.2.2")
     implementation("com.google.dagger:hilt-android:${rootProject.extra["hilt_version"]}")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0-alpha01")
-    implementation("androidx.compose.material:material:1.4.3")
     kapt("com.google.dagger:hilt-android-compiler:${rootProject.extra["hilt_version"]}")
     testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.ext:junit:1.2.0-alpha01")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:${rootProject.extra["compose_ui_version"]}")
     debugImplementation("androidx.compose.ui:ui-tooling:${rootProject.extra["compose_ui_version"]}")
