@@ -19,6 +19,7 @@ import com.tuxsnct.inkwell.utils.CompletePreviews
 
 @Composable
 fun EditorScreen(
+    isCompact: Boolean,
     popBackStack: () -> Unit,
     editorViewModel: EditorViewModel = hiltViewModel()
 ) {
