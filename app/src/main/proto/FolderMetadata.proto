@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package com.tuxsnct.inkwell;
+
+enum FolderType {
+  COLLECTION = 0;
+  NOTE = 1;
+  TEMPLATE = 2;
+}
+
+message FolderMetadata {
+  string id = 1;
+  FolderType type = 2;
+  string displayName = 3;
+  string createdAt = 4;
+  string updatedAt = 5;
+  uint64 size = 6;
+  map<string, string> customMetadata = 7;
+}

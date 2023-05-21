@@ -1,19 +1,21 @@
 package com.tuxsnct.inkwell.model
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.core.DataStoreFactory
+import com.tuxsnct.inkwell.FolderMetadataOuterClass.FolderMetadata
+import com.tuxsnct.inkwell.FolderMetadataOuterClass.FolderType
 import java.io.File
-import java.util.UUID
 
 class Template(
-    file: File,
-    name: String?
-) : AppSpecificFile() {
-    override val type: AppSpecificFileType = AppSpecificFileType.TEMPLATE
-
-    init {
-        this.file = file
-        this.uuid = UUID.fromString(file.nameWithoutExtension)
-        this.name = name ?: "Untitled"
+    override val file: File
+) : Folder() {
+    override val type: FolderType = FolderType.TEMPLATE
+    override val metadataStore: DataStore<FolderMetadata> = DataStoreFactory.create(
+        serializer = FolderMetadataSerializer
+    ) {
+        if (!this.file.exists()) this.file.mkdir()
+        File(this.file.path, "metadata.pb")
     }
 
     override fun save() {
@@ -21,32 +23,14 @@ class Template(
     }
 
     override fun rename(newName: String) {
-        name = newName
+        TODO()
     }
 
     companion object {
-        fun getTemplatesDir(context: Context): File {
+        fun getDir(context: Context): File {
             val templatesDir = File(context.filesDir, "templates")
             if (!templatesDir.exists()) templatesDir.mkdir()
             return templatesDir
         }
-
-        private fun create(parent: File, name: String?): Template {
-            val file = File(parent, "${UUID.randomUUID()}.iwtmpl")
-
-            if (!file.exists()) {
-                file.createNewFile()
-                return Template(file, name)
-            }
-
-            throw FileAlreadyExistsException(file)
-        }
-
-        fun create(context: Context, name: String?): Template {
-            val templatesDir = getTemplatesDir(context)
-            return create(templatesDir, name)
-        }
-
-        fun create(folder: Folder, name: String?): Template = create(folder.file, name)
     }
 }

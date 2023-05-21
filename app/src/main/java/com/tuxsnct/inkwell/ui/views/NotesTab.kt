@@ -2,16 +2,16 @@ package com.tuxsnct.inkwell.ui.views
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import com.tuxsnct.inkwell.model.AppSpecificFile
+import com.tuxsnct.inkwell.model.Folder
 import com.tuxsnct.inkwell.model.Note
 import com.tuxsnct.inkwell.ui.components.manager.ManagerFilesGrid
+import com.tuxsnct.inkwell.ui.viewmodels.ManagerViewModel
 
 @Composable
 fun NotesTab(
-    navigateToEditor: (AppSpecificFile) -> Unit
+    managerViewModel: ManagerViewModel,
+    navigateToEditor: (Folder) -> Unit
 ) {
-    val context = LocalContext.current
-    val notes = Note.getNotesDir(context).listFiles()?.map { AppSpecificFile.load(it) }
-        ?: emptyList()
-    ManagerFilesGrid(notes, navigateToEditor)
+    val notes = Note.getDir(LocalContext.current).listFiles()?.map { Note(it) } ?: emptyList()
+    ManagerFilesGrid(notes, navigateToEditor, managerViewModel)
 }

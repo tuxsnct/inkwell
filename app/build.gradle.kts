@@ -1,3 +1,4 @@
+import com.google.protobuf.gradle.id
 import java.util.Properties
 import java.io.FileInputStream
 
@@ -15,6 +16,7 @@ plugins {
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
     id("com.google.dagger.hilt.android")
+    id("com.google.protobuf")
 }
 
 android {
@@ -83,7 +85,7 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.10.0")
+    implementation("androidx.core:core-ktx:1.10.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
@@ -101,6 +103,11 @@ dependencies {
     implementation("com.android.billingclient:billing-ktx:6.0.0")
     implementation("io.arrow-kt:arrow-core:1.2.0-RC")
     implementation("io.arrow-kt:arrow-fx-coroutines:1.2.0-RC")
+    implementation("androidx.datastore:datastore:1.0.0")
+    implementation("androidx.datastore:datastore-core:1.0.0")
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation("androidx.datastore:datastore-preferences-core:1.0.0")
+    implementation("com.google.protobuf:protobuf-javalite:3.23.1")
     implementation(platform("com.google.firebase:firebase-bom:32.0.0"))
     implementation("com.google.firebase:firebase-crashlytics:18.3.7")
     implementation("com.google.firebase:firebase-analytics-ktx:21.2.2")
@@ -121,4 +128,20 @@ kapt {
 
 hilt {
     enableAggregatingTask = true
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.23.1"
+    }
+
+    generateProtoTasks {
+        all().forEach() { it ->
+            it.builtins {
+                id("java") {
+                    option("lite")
+                }
+            }
+        }
+    }
 }

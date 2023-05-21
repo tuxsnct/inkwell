@@ -1,16 +1,15 @@
 package com.tuxsnct.inkwell.model
 
-import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
 import com.tuxsnct.inkwell.FolderMetadataOuterClass.FolderMetadata
 import com.tuxsnct.inkwell.FolderMetadataOuterClass.FolderType
 import java.io.File
 
-class Note(
+class Collection(
     override val file: File
 ) : Folder() {
-    override val type: FolderType = FolderType.NOTE
+    override val type: FolderType = FolderType.COLLECTION
     override val metadataStore: DataStore<FolderMetadata> = DataStoreFactory.create(
         serializer = FolderMetadataSerializer
     ) {
@@ -24,13 +23,5 @@ class Note(
 
     override fun rename(newName: String) {
         TODO()
-    }
-
-    companion object {
-        fun getDir(context: Context): File {
-            val notesDir = File(context.filesDir, "notes")
-            if (!notesDir.exists()) notesDir.mkdir()
-            return notesDir
-        }
     }
 }

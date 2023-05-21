@@ -6,8 +6,8 @@ import androidx.compose.material.icons.filled.Book
 import androidx.compose.material.icons.filled.Description
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -20,6 +20,7 @@ import com.tuxsnct.inkwell.ui.components.manager.ManagerFloatingActionButton
 import com.tuxsnct.inkwell.ui.components.manager.ManagerTabItem
 import com.tuxsnct.inkwell.ui.navigations.ManagerDestinations
 import com.tuxsnct.inkwell.ui.navigations.ManagerNavGraph
+import com.tuxsnct.inkwell.ui.viewmodels.ManagerViewModel
 import com.tuxsnct.inkwell.utils.CompletePreviews
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -28,8 +29,11 @@ fun ManagerScreen(
     isCompact: Boolean,
     navigateToSearch: () -> Unit,
     navigateToSettings: () -> Unit,
-    navigateToEditor: () -> Unit
+    navigateToEditor: () -> Unit,
+    managerViewModel: ManagerViewModel = hiltViewModel()
 ) {
+    val scope = rememberCoroutineScope()
+
     val navController = rememberNavController()
     val backStackEntry = navController.currentBackStackEntryAsState()
     val currentDestination: NavDestination? = backStackEntry.value?.destination
@@ -55,9 +59,6 @@ fun ManagerScreen(
         }
     }
 
-    var openBottomSheet by rememberSaveable { mutableStateOf(false) }
-    val modalBottomSheetState = rememberModalBottomSheetState()
-
     Scaffold(
         topBar = { ManagerAppBar(isCompact, navigateToSearch, navigateToSettings) },
         bottomBar = {
@@ -70,7 +71,7 @@ fun ManagerScreen(
             }
         },
         floatingActionButton = {
-            ManagerFloatingActionButton { openBottomSheet = true }
+            ManagerFloatingActionButton { managerViewModel.openBottomSheet() }
         }
     ) { contentPadding ->
         Row(modifier = Modifier.padding(contentPadding)) {
@@ -81,14 +82,15 @@ fun ManagerScreen(
                     currentDestination
                 )  { onTabClick(it) }
             }
-            ManagerNavGraph(isCompact, navigateToEditor, navController)
+            ManagerNavGraph(isCompact, navigateToEditor, navController, managerViewModel)
         }
     }
 
-    if (openBottomSheet) {
-        ManagerBottomSheet(sheetState = modalBottomSheetState) {
-            openBottomSheet = false
-        }
+    val modalBottomSheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = managerViewModel.skipPartiallyExpanded
+    )
+    if (managerViewModel.isBottomSheetOpen) {
+        ManagerBottomSheet(modalBottomSheetState, scope, managerViewModel)
     }
 }
 

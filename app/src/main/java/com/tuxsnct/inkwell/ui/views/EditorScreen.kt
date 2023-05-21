@@ -25,7 +25,7 @@ fun EditorScreen(
 ) {
     var fileName by remember { mutableStateOf("") }
 
-    editorViewModel.file.observe(LocalLifecycleOwner.current) {
+    editorViewModel.folder.observe(LocalLifecycleOwner.current) {
         fileName = "${it?.type?.name} ${it?.file?.nameWithoutExtension}"
     }
 

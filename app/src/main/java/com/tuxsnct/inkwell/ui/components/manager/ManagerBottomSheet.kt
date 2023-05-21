@@ -21,33 +21,46 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.tuxsnct.inkwell.FolderMetadataOuterClass.FolderType
 import com.tuxsnct.inkwell.model.Folder
 import com.tuxsnct.inkwell.model.Note
 import com.tuxsnct.inkwell.model.Template
+import com.tuxsnct.inkwell.ui.viewmodels.ManagerViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ManagerBottomSheet(
     sheetState: SheetState,
-    onDismissRequest: () -> Unit
+    scope: CoroutineScope,
+    managerViewModel: ManagerViewModel
 ) {
     val context = LocalContext.current
 
     ModalBottomSheet(
         sheetState = sheetState,
-        onDismissRequest = onDismissRequest
+        onDismissRequest = { managerViewModel.closeBottomSheet() }
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(vertical = 16.dp)
+                .padding(bottom = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             FilledTonalButton(
                 onClick = {
-                    val note = Note.create(context, null)
-                    println(note.file.absolutePath)
+                    scope.launch {
+                        val note = Folder.create(FolderType.NOTE, Note.getDir(context))
+                        println(note.file.absolutePath)
+                        sheetState.hide()
+                    }.invokeOnCompletion {
+                        if (!sheetState.isVisible) {
+                            managerViewModel.closeBottomSheet()
+                        }
+                    }
                 },
             ) {
                 Icon(Icons.Default.Book, contentDescription = "Note")
@@ -56,8 +69,15 @@ fun ManagerBottomSheet(
             }
             FilledTonalButton(
                 onClick = {
-                    val template = Template.create(context, null)
-                    println(template.file.absolutePath)
+                    scope.launch {
+                        val template = Folder.create(FolderType.TEMPLATE, Template.getDir(context))
+                        println(template.file.absolutePath)
+                        sheetState.hide()
+                    }.invokeOnCompletion {
+                        if (!sheetState.isVisible) {
+                            managerViewModel.closeBottomSheet()
+                        }
+                    }
                 },
             ) {
                 Icon(Icons.Default.Description, contentDescription = "Template")
@@ -67,13 +87,20 @@ fun ManagerBottomSheet(
             }
             FilledTonalButton(
                 onClick = {
-                    val folder = Folder.create(Note.getNotesDir(context), null, null)
-                    println(folder.file.absolutePath)
+                    scope.launch {
+                        val collection = Folder.create(FolderType.COLLECTION, Note.getDir(context))
+                        println(collection.file.absolutePath)
+                        sheetState.hide()
+                    }.invokeOnCompletion {
+                        if (!sheetState.isVisible) {
+                            managerViewModel.closeBottomSheet()
+                        }
+                    }
                 },
             ) {
-                Icon(Icons.Default.Folder, contentDescription = "Folder")
+                Icon(Icons.Default.Folder, contentDescription = "Collection")
                 Spacer(modifier = Modifier.width(16.dp))
-                Text("Folder")
+                Text("Collection")
             }
         }
     }
