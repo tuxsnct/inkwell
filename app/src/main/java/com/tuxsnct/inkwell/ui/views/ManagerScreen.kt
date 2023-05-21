@@ -35,8 +35,8 @@ fun ManagerScreen(
     val scope = rememberCoroutineScope()
 
     val navController = rememberNavController()
-    val backStackEntry = navController.currentBackStackEntryAsState()
-    val currentDestination: NavDestination? = backStackEntry.value?.destination
+    val backStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination: NavDestination? = backStackEntry?.destination
     val tabs = listOf(
         ManagerTabItem(
             icon = { Icon(Icons.Default.Book, contentDescription = "Notes") },
@@ -82,7 +82,7 @@ fun ManagerScreen(
                     currentDestination
                 )  { onTabClick(it) }
             }
-            ManagerNavGraph(isCompact, navigateToEditor, navController, managerViewModel)
+            ManagerNavGraph(navigateToEditor, navController, managerViewModel)
         }
     }
 

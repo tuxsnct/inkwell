@@ -32,5 +32,10 @@ class Note(
             if (!notesDir.exists()) notesDir.mkdir()
             return notesDir
         }
+
+        fun list(context: Context): List<Note> {
+            val notesDir = getDir(context)
+            return notesDir.listFiles()?.map { Note(it) } ?: emptyList()
+        }
     }
 }

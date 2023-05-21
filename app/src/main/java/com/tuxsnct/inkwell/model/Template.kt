@@ -32,5 +32,10 @@ class Template(
             if (!templatesDir.exists()) templatesDir.mkdir()
             return templatesDir
         }
+
+        fun list(context: Context): List<Template> {
+            val templatesDir = getDir(context)
+            return templatesDir.listFiles()?.map { Template(it) } ?: emptyList()
+        }
     }
 }

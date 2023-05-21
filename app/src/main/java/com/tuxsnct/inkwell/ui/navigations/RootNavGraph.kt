@@ -33,7 +33,7 @@ fun RootNavGraph(
         composable(RootDestinations.EDITOR.name) {
             EditorScreen(
                 isCompact,
-                rootNavActions.navigateToManager
+                rootNavActions.popBackStack
             )
         }
         composable(RootDestinations.SEARCH.name) {

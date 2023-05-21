@@ -18,10 +18,9 @@ enum class ManagerDestinations {
 }
 
 fun NavGraphBuilder.managerNavGraph(
-    isCompact: Boolean,
     navigateToEditor: () -> Unit,
+    editorViewModel: EditorViewModel,
     managerViewModel: ManagerViewModel,
-    editorViewModel: EditorViewModel
 ) {
     navigation(ManagerDestinations.NOTES.name, RootDestinations.MANAGER.name) {
         composable(ManagerDestinations.NOTES.name) {
@@ -41,7 +40,6 @@ fun NavGraphBuilder.managerNavGraph(
 
 @Composable
 fun ManagerNavGraph(
-    isCompact: Boolean,
     navigateToEditor: () -> Unit,
     navController: NavHostController,
     managerViewModel: ManagerViewModel
@@ -52,6 +50,6 @@ fun ManagerNavGraph(
         navController = navController,
         startDestination = RootDestinations.MANAGER.name
     ) {
-        managerNavGraph(isCompact, navigateToEditor, managerViewModel, editorViewModel)
+        managerNavGraph(navigateToEditor, editorViewModel, managerViewModel)
     }
 }

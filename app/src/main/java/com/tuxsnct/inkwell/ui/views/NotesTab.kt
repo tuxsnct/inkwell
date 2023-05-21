@@ -12,6 +12,6 @@ fun NotesTab(
     managerViewModel: ManagerViewModel,
     navigateToEditor: (Folder) -> Unit
 ) {
-    val notes = Note.getDir(LocalContext.current).listFiles()?.map { Note(it) } ?: emptyList()
+    val notes = Note.list(LocalContext.current)
     ManagerFilesGrid(notes, navigateToEditor, managerViewModel)
 }

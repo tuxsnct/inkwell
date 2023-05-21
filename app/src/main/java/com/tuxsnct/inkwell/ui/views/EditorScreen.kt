@@ -19,8 +19,7 @@ import com.tuxsnct.inkwell.utils.CompletePreviews
 
 @Composable
 fun EditorScreen(
-    isCompact: Boolean,
-    navigateToManager: () -> Unit,
+    popBackStack: () -> Unit,
     editorViewModel: EditorViewModel = hiltViewModel()
 ) {
     var fileName by remember { mutableStateOf("") }
@@ -30,7 +29,7 @@ fun EditorScreen(
     }
 
     Scaffold(
-        topBar = { EditorAppBar(fileName, navigateToManager) }
+        topBar = { EditorAppBar(fileName, popBackStack) }
     ) { contentPadding ->
         Box(modifier = Modifier
             .padding(contentPadding)
@@ -43,11 +42,11 @@ fun EditorScreen(
 @CompletePreviews
 @Composable
 fun CompactEditorScreenPreview() {
-    EditorScreen(true, {})
+    EditorScreen(false, {})
 }
 
 @CompletePreviews
 @Composable
 fun ExpandedEditorScreenPreview() {
-    EditorScreen(false, {})
+    EditorScreen(true, {})
 }

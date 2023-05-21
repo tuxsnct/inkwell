@@ -12,6 +12,6 @@ fun TemplatesTab(
     managerViewModel: ManagerViewModel,
     navigateToEditor: (Folder) -> Unit
 ) {
-    val templates = Template.getDir(LocalContext.current).listFiles()?.map { Template(it) } ?: emptyList()
+    val templates = Template.list(LocalContext.current)
     ManagerFilesGrid(templates, navigateToEditor, managerViewModel)
 }
