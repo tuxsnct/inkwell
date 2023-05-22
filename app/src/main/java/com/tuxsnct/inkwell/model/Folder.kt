@@ -29,6 +29,22 @@ object FolderMetadataSerializer : Serializer<FolderMetadata> {
     override suspend fun writeTo(t: FolderMetadata, output: OutputStream) = t.writeTo(output)
 }
 
+object FolderMetadataStoreHolder {
+    private var instance: DataStore<FolderMetadata>? = null
+
+    fun getInstance(file: File): DataStore<FolderMetadata> {
+        if (instance == null) {
+            instance = DataStoreFactory.create(
+                serializer = FolderMetadataSerializer
+            ) {
+                if (!file.exists()) file.mkdir()
+                File(file.path, "metadata.pb")
+            }
+        }
+        return instance!!
+    }
+}
+
 abstract class Folder {
     abstract val type: FolderType
     abstract val file: File
@@ -41,40 +57,35 @@ abstract class Folder {
     abstract fun rename(newName: String)
 
     companion object {
-        suspend fun create(folderType: FolderType, parent: File): Folder {
-            val file = File(parent, UUID.randomUUID().toString())
-            val metadataStore: DataStore<FolderMetadata> = DataStoreFactory.create(
+        fun getMetadataStore(file: File): DataStore<FolderMetadata> {
+            return DataStoreFactory.create(
                 serializer = FolderMetadataSerializer
             ) {
                 if (!file.exists()) file.mkdir()
                 File(file.path, "metadata.pb")
             }
+        }
+
+        suspend fun create(folderType: FolderType, parent: File): Folder {
+            val file = File(parent, UUID.randomUUID().toString())
+            val metadataStore = getMetadataStore(file)
             metadataStore.updateData { metadata ->
                 metadata.toBuilder().setType(folderType).build()
             }
 
             return when (folderType) {
-                COLLECTION -> Collection(file)
-                NOTE -> Note(file)
-                TEMPLATE -> Template(file)
+                COLLECTION -> Collection(file, metadataStore)
+                NOTE -> Note(file, metadataStore)
+                TEMPLATE -> Template(file, metadataStore)
                 else -> throw FileNotFoundException()
             }
         }
 
-        suspend fun load(file: File): Folder {
-            val metadataStore: DataStore<FolderMetadata> = DataStoreFactory.create(
-                serializer = FolderMetadataSerializer
-            ) {
-                if (!file.exists()) file.mkdir()
-                File(file.path, "metadata.pb")
-            }
-
-            val folderType: FolderType? = metadataStore.data.first().type
-
-            return when (folderType) {
-                COLLECTION -> Collection(file)
-                NOTE -> Note(file)
-                TEMPLATE -> Template(file)
+        suspend fun load(file: File, metadataStore: DataStore<FolderMetadata>): Folder {
+            return when (metadataStore.data.first().type) {
+                COLLECTION -> Collection(file, metadataStore)
+                NOTE -> Note(file, metadataStore)
+                TEMPLATE -> Template(file, metadataStore)
                 else -> throw FileNotFoundException()
             }
         }

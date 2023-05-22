@@ -74,7 +74,8 @@ fun ManagerFilesGrid(
 @Composable
 fun ManagerFilesGridPreview() {
     val files = (1..10).map {
-        Note(File("$it"))
+        val file = File("$it")
+        Note(file, Folder.getMetadataStore(file))
     }
     ManagerFilesGrid(files, {}, ManagerViewModel())
 }

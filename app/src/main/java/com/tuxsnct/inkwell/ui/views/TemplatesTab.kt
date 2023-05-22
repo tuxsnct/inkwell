@@ -1,6 +1,11 @@
 package com.tuxsnct.inkwell.ui.views
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import com.tuxsnct.inkwell.model.Folder
 import com.tuxsnct.inkwell.model.Template
@@ -12,6 +17,12 @@ fun TemplatesTab(
     managerViewModel: ManagerViewModel,
     navigateToEditor: (Folder) -> Unit
 ) {
-    val templates = Template.list(LocalContext.current)
+    var templates by remember { mutableStateOf(emptyList<Folder>()) }
+
+    val context = LocalContext.current
+    LaunchedEffect(context) {
+        templates = Template.list(context)
+    }
+
     ManagerFilesGrid(templates, navigateToEditor, managerViewModel)
 }

@@ -54,7 +54,7 @@ fun ManagerBottomSheet(
                 onClick = {
                     scope.launch {
                         val note = Folder.create(FolderType.NOTE, Note.getDir(context))
-                        println(note.file.absolutePath)
+                        (note.file.absolutePath)
                         sheetState.hide()
                     }.invokeOnCompletion {
                         if (!sheetState.isVisible) {
