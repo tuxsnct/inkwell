@@ -21,7 +21,7 @@ class Note(
     }
 
     companion object {
-        private var folders: List<Folder> = emptyList()
+        var folders = emptyList<Folder>()
 
         fun getDir(context: Context): File {
             val notesDir = File(context.filesDir, "notes")

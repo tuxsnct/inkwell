@@ -53,7 +53,7 @@ fun ManagerBottomSheet(
             FilledTonalButton(
                 onClick = {
                     scope.launch {
-                        Folder.create(FolderType.NOTE, Note.getDir(context))
+                        Folder.create(context, FolderType.NOTE, Note.getDir(context))
                         sheetState.hide()
                     }.invokeOnCompletion {
                         if (!sheetState.isVisible) {
@@ -69,7 +69,7 @@ fun ManagerBottomSheet(
             FilledTonalButton(
                 onClick = {
                     scope.launch {
-                        Folder.create(FolderType.TEMPLATE, Template.getDir(context))
+                        Folder.create(context, FolderType.TEMPLATE, Template.getDir(context))
                         sheetState.hide()
                     }.invokeOnCompletion {
                         if (!sheetState.isVisible) {
@@ -86,7 +86,7 @@ fun ManagerBottomSheet(
             FilledTonalButton(
                 onClick = {
                     scope.launch {
-                        Folder.create(FolderType.COLLECTION, Note.getDir(context))
+                        Folder.create(context, FolderType.COLLECTION, Note.getDir(context))
                         sheetState.hide()
                     }.invokeOnCompletion {
                         if (!sheetState.isVisible) {

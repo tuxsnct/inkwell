@@ -21,7 +21,7 @@ class Template(
     }
 
     companion object {
-        private var folders = emptyList<Folder>()
+        var folders = emptyList<Folder>()
 
         fun getDir(context: Context): File {
             val templatesDir = File(context.filesDir, "templates")

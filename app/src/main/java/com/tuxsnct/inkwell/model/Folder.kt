@@ -1,5 +1,6 @@
 package com.tuxsnct.inkwell.model
 
+import android.content.Context
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
@@ -66,19 +67,26 @@ abstract class Folder {
             }
         }
 
-        suspend fun create(folderType: FolderType, parent: File): Folder {
+        suspend fun create(context: Context, folderType: FolderType, parent: File): Folder {
             val file = File(parent, UUID.randomUUID().toString())
             val metadataStore = getMetadataStore(file)
             metadataStore.updateData { metadata ->
                 metadata.toBuilder().setType(folderType).build()
             }
 
-            return when (folderType) {
+            val folder = when (folderType) {
                 COLLECTION -> Collection(file, metadataStore)
                 NOTE -> Note(file, metadataStore)
                 TEMPLATE -> Template(file, metadataStore)
                 else -> throw FileNotFoundException()
             }
+
+            when (folder.file.path.startsWith(Note.getDir(context).path)) {
+                true -> Note.folders += folder
+                false -> Template.folders += folder
+            }
+
+            return folder
         }
 
         suspend fun load(file: File, metadataStore: DataStore<FolderMetadata>): Folder {
