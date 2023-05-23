@@ -8,7 +8,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.tuxsnct.inkwell.ui.viewmodels.EditorViewModel
-import com.tuxsnct.inkwell.ui.viewmodels.ManagerViewModel
 import com.tuxsnct.inkwell.ui.views.NotesTab
 import com.tuxsnct.inkwell.ui.views.TemplatesTab
 
@@ -19,18 +18,17 @@ enum class ManagerDestinations {
 
 fun NavGraphBuilder.managerNavGraph(
     navigateToEditor: () -> Unit,
-    editorViewModel: EditorViewModel,
-    managerViewModel: ManagerViewModel,
+    editorViewModel: EditorViewModel
 ) {
     navigation(ManagerDestinations.NOTES.name, RootDestinations.MANAGER.name) {
         composable(ManagerDestinations.NOTES.name) {
-            NotesTab(managerViewModel) {
+            NotesTab {
                 editorViewModel.updateFile(it)
                 navigateToEditor()
             }
         }
         composable(ManagerDestinations.TEMPLATES.name) {
-            TemplatesTab(managerViewModel) {
+            TemplatesTab {
                 editorViewModel.updateFile(it)
                 navigateToEditor()
             }
@@ -40,9 +38,8 @@ fun NavGraphBuilder.managerNavGraph(
 
 @Composable
 fun ManagerNavGraph(
-    navigateToEditor: () -> Unit,
     navController: NavHostController,
-    managerViewModel: ManagerViewModel
+    navigateToEditor: () -> Unit
 ) {
     val editorViewModel: EditorViewModel = hiltViewModel()
 
@@ -50,6 +47,6 @@ fun ManagerNavGraph(
         navController = navController,
         startDestination = RootDestinations.MANAGER.name
     ) {
-        managerNavGraph(navigateToEditor, editorViewModel, managerViewModel)
+        managerNavGraph(navigateToEditor, editorViewModel)
     }
 }

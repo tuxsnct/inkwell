@@ -7,32 +7,32 @@ import com.tuxsnct.inkwell.ui.viewmodels.SettingsViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityRetainedComponent
-import dagger.hilt.android.scopes.ActivityRetainedScoped
+import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.android.scopes.ActivityScoped
 
 @Module
-@InstallIn(ActivityRetainedComponent::class)
+@InstallIn(ActivityComponent::class)
 object ActivityModelModule {
+    @ActivityScoped
     @Provides
-    @ActivityRetainedScoped
     fun provideEditorViewModel(): EditorViewModel {
         return EditorViewModel()
     }
 
+    @ActivityScoped
     @Provides
-    @ActivityRetainedScoped
     fun provideManagerViewModel(): ManagerViewModel {
         return ManagerViewModel()
     }
 
+    @ActivityScoped
     @Provides
-    @ActivityRetainedScoped
     fun provideSearchViewModel(): SearchViewModel {
         return SearchViewModel()
     }
 
+    @ActivityScoped
     @Provides
-    @ActivityRetainedScoped
     fun provideSettingsViewModel(): SettingsViewModel {
         return SettingsViewModel()
     }

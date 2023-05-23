@@ -4,10 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.tuxsnct.inkwell.model.Folder
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,12 +20,6 @@ class ManagerViewModel @Inject constructor() : ViewModel() {
 
     fun closeBottomSheet() {
         isBottomSheetOpen = false
-    }
-
-    val folders = MutableStateFlow<List<Folder>>(emptyList())
-
-    fun updateFolders(newFolders: List<Folder>) {
-        folders.update { newFolders }
     }
 }
 

@@ -2,7 +2,7 @@ import com.google.protobuf.gradle.id
 import java.util.Properties
 import java.io.FileInputStream
 
-val keystorePropertiesFile = rootProject.file("keystore.properties")
+val keystorePropertiesFile: File = rootProject.file("keystore.properties")
 
 val keystoreProperties = Properties()
 
@@ -27,7 +27,7 @@ android {
         applicationId = "com.tuxsnct.inkwell"
         minSdk = 28
         targetSdk = 33
-        versionCode = 24
+        versionCode = 25
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

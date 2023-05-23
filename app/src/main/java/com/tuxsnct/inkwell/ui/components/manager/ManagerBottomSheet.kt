@@ -21,8 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.tuxsnct.inkwell.FolderMetadataOuterClass.FolderType
-import com.tuxsnct.inkwell.model.Folder
+import com.tuxsnct.inkwell.model.Collection
 import com.tuxsnct.inkwell.model.Note
 import com.tuxsnct.inkwell.model.Template
 import com.tuxsnct.inkwell.ui.viewmodels.ManagerViewModel
@@ -53,7 +52,7 @@ fun ManagerBottomSheet(
             FilledTonalButton(
                 onClick = {
                     scope.launch {
-                        Folder.create(context, FolderType.NOTE, Note.getDir(context))
+                        Note.create(Note.getDir(context))
                         sheetState.hide()
                     }.invokeOnCompletion {
                         if (!sheetState.isVisible) {
@@ -69,7 +68,7 @@ fun ManagerBottomSheet(
             FilledTonalButton(
                 onClick = {
                     scope.launch {
-                        Folder.create(context, FolderType.TEMPLATE, Template.getDir(context))
+                        Template.create(Template.getDir(context))
                         sheetState.hide()
                     }.invokeOnCompletion {
                         if (!sheetState.isVisible) {
@@ -86,7 +85,7 @@ fun ManagerBottomSheet(
             FilledTonalButton(
                 onClick = {
                     scope.launch {
-                        Folder.create(context, FolderType.COLLECTION, Note.getDir(context))
+                        Collection.create(context, Note.getDir(context))
                         sheetState.hide()
                     }.invokeOnCompletion {
                         if (!sheetState.isVisible) {

@@ -82,7 +82,7 @@ fun ManagerScreen(
                     currentDestination
                 )  { onTabClick(it) }
             }
-            ManagerNavGraph(navigateToEditor, navController, managerViewModel)
+            ManagerNavGraph(navController, navigateToEditor)
         }
     }
 

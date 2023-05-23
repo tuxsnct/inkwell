@@ -2,27 +2,28 @@ package com.tuxsnct.inkwell.ui.views
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import com.tuxsnct.inkwell.model.Folder
 import com.tuxsnct.inkwell.model.Template
 import com.tuxsnct.inkwell.ui.components.manager.ManagerFilesGrid
-import com.tuxsnct.inkwell.ui.viewmodels.ManagerViewModel
 
 @Composable
 fun TemplatesTab(
-    managerViewModel: ManagerViewModel,
     navigateToEditor: (Folder) -> Unit
 ) {
-    var templates by rememberSaveable { mutableStateOf(emptyList<Folder>()) }
+    val templates = remember { mutableStateListOf<Folder>() }
 
     val context = LocalContext.current
-    LaunchedEffect(context) {
-        templates = Template.list(context)
+    val lifecycleOwner = LocalLifecycleOwner.current
+    LaunchedEffect(Unit) {
+        Template.observeFolders(context, lifecycleOwner) {
+            templates.clear()
+            templates.addAll(it)
+        }
     }
 
-    ManagerFilesGrid(templates, navigateToEditor, managerViewModel)
+    ManagerFilesGrid(templates, navigateToEditor)
 }

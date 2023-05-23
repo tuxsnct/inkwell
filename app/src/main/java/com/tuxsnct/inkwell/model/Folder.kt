@@ -1,6 +1,5 @@
 package com.tuxsnct.inkwell.model
 
-import android.content.Context
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
@@ -30,22 +29,6 @@ object FolderMetadataSerializer : Serializer<FolderMetadata> {
     override suspend fun writeTo(t: FolderMetadata, output: OutputStream) = t.writeTo(output)
 }
 
-object FolderMetadataStoreHolder {
-    private var instance: DataStore<FolderMetadata>? = null
-
-    fun getInstance(file: File): DataStore<FolderMetadata> {
-        if (instance == null) {
-            instance = DataStoreFactory.create(
-                serializer = FolderMetadataSerializer
-            ) {
-                if (!file.exists()) file.mkdir()
-                File(file.path, "metadata.pb")
-            }
-        }
-        return instance!!
-    }
-}
-
 abstract class Folder {
     abstract val type: FolderType
     abstract val file: File
@@ -62,31 +45,9 @@ abstract class Folder {
             return DataStoreFactory.create(
                 serializer = FolderMetadataSerializer
             ) {
-                if (!file.exists()) file.mkdir()
+                if (!file.exists() && !file.mkdir()) throw FileSystemException(file)
                 File(file.path, "metadata.pb")
             }
-        }
-
-        suspend fun create(context: Context, folderType: FolderType, parent: File): Folder {
-            val file = File(parent, UUID.randomUUID().toString())
-            val metadataStore = getMetadataStore(file)
-            metadataStore.updateData { metadata ->
-                metadata.toBuilder().setType(folderType).build()
-            }
-
-            val folder = when (folderType) {
-                COLLECTION -> Collection(file, metadataStore)
-                NOTE -> Note(file, metadataStore)
-                TEMPLATE -> Template(file, metadataStore)
-                else -> throw FileNotFoundException()
-            }
-
-            when (folder.file.path.startsWith(Note.getDir(context).path)) {
-                true -> Note.folders += folder
-                false -> Template.folders += folder
-            }
-
-            return folder
         }
 
         suspend fun load(file: File, metadataStore: DataStore<FolderMetadata>): Folder {
