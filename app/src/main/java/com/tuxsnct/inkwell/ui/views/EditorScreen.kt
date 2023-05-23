@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,8 +26,11 @@ fun EditorScreen(
 ) {
     var fileName by remember { mutableStateOf("") }
 
-    editorViewModel.folder.observe(LocalLifecycleOwner.current) {
-        fileName = "${it?.type?.name} ${it?.file?.nameWithoutExtension}"
+    val lifecycleOwner = LocalLifecycleOwner.current
+    LaunchedEffect(Unit) {
+        editorViewModel.folder.observe(lifecycleOwner) {
+            fileName = "${it.type} ${it.file.nameWithoutExtension}"
+        }
     }
 
     Scaffold(

@@ -8,9 +8,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EditorViewModel @Inject constructor() : ViewModel() {
-    val folder: MutableLiveData<Folder> by lazy {
-        MutableLiveData<Folder>()
-    }
+    val folder = MutableLiveData<Folder>()
 
     fun updateFile(newFolder: Folder) {
         folder.value = newFolder
