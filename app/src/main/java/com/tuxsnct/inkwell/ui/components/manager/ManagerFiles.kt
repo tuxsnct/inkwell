@@ -11,8 +11,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
-import com.tuxsnct.inkwell.model.Folder
-import com.tuxsnct.inkwell.model.Note
+import com.tuxsnct.inkwell.model.file.Folder
+import com.tuxsnct.inkwell.model.file.Note
 import com.tuxsnct.inkwell.utils.CompletePreviews
 import java.io.File
 

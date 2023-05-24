@@ -22,12 +22,14 @@ plugins {
 android {
     namespace = "com.tuxsnct.inkwell"
     compileSdk = 33
+    @Suppress("UnstableApiUsage")
+    ndkVersion = "25.2.9519653"
 
     defaultConfig {
         applicationId = "com.tuxsnct.inkwell"
-        minSdk = 28
+        minSdk = 29
         targetSdk = 33
-        versionCode = 26
+        versionCode = 32
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -43,6 +45,7 @@ android {
             isShrinkResources = true
             @Suppress("UnstableApiUsage")
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            ndk { debugSymbolLevel = "SYMBOL_TABLE" }
         }
         getByName("debug") {
             isMinifyEnabled = false
@@ -99,6 +102,7 @@ dependencies {
     implementation("androidx.compose.material:material:${rootProject.extra["compose_ui_version"]}")
     implementation("androidx.compose.material:material-icons-extended:${rootProject.extra["compose_ui_version"]}")
     implementation("androidx.graphics:graphics-core:1.0.0-alpha03")
+    implementation("androidx.input:input-motionprediction:1.0.0-beta01")
     implementation("com.google.mlkit:digital-ink-recognition:18.1.0")
     implementation("com.google.android.gms:play-services-auth:20.5.0")
     implementation("com.google.android.gms:play-services-oss-licenses:17.0.1")

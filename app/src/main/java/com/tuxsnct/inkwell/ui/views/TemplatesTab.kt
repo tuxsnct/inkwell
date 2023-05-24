@@ -6,8 +6,8 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
-import com.tuxsnct.inkwell.model.Folder
-import com.tuxsnct.inkwell.model.Template
+import com.tuxsnct.inkwell.model.file.Folder
+import com.tuxsnct.inkwell.model.file.Template
 import com.tuxsnct.inkwell.ui.components.manager.ManagerFilesGrid
 
 @Composable

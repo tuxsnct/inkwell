@@ -1,4 +1,4 @@
-package com.tuxsnct.inkwell.model
+package com.tuxsnct.inkwell.model.file
 
 import android.content.Context
 import androidx.datastore.core.DataStore

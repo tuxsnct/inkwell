@@ -1,4 +1,4 @@
-package com.tuxsnct.inkwell.model
+package com.tuxsnct.inkwell.model.file
 
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.DataStore

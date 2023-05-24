@@ -10,11 +10,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.tuxsnct.inkwell.ui.components.editor.EditorAppBar
+import com.tuxsnct.inkwell.ui.components.editor.EditorRenderer
 import com.tuxsnct.inkwell.ui.viewmodels.EditorViewModel
 import com.tuxsnct.inkwell.utils.CompletePreviews
 
@@ -39,7 +39,7 @@ fun EditorScreen(
         Box(modifier = Modifier
             .padding(contentPadding)
             .fillMaxSize()) {
-            Text(fileName, modifier = Modifier.align(Alignment.Center))
+            EditorRenderer(editorViewModel)
         }
     }
 }

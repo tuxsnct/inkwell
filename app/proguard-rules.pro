@@ -20,3 +20,6 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 -keep class * extends com.google.protobuf.GeneratedMessageLite { *; }
+-keep class androidx.graphics.** { *; }
+-keep class androidx.opengl.** { *; }
+-keep class androidx.hardware.** { *; }

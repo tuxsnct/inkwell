@@ -21,9 +21,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.tuxsnct.inkwell.model.Collection
-import com.tuxsnct.inkwell.model.Note
-import com.tuxsnct.inkwell.model.Template
+import com.tuxsnct.inkwell.model.file.Collection
+import com.tuxsnct.inkwell.model.file.Note
+import com.tuxsnct.inkwell.model.file.Template
 import com.tuxsnct.inkwell.ui.viewmodels.ManagerViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
