@@ -20,6 +20,8 @@
             android:resizeableActivity="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.CREATE_NOTE" />
+                <action android:name="org.chromium.arc.intent.action.CREATE_NOTE" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
