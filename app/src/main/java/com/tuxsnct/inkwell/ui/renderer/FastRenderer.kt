@@ -2,7 +2,7 @@ package com.tuxsnct.inkwell.ui.renderer
 
 import android.annotation.SuppressLint
 import android.graphics.Color
-import android.opengl.GLES20
+import android.opengl.GLES31
 import android.opengl.Matrix
 import android.view.MotionEvent
 import android.view.SurfaceView
@@ -52,7 +52,7 @@ class FastRenderer(
     ) {
         val bufferWidth = bufferInfo.width
         val bufferHeight = bufferInfo.height
-        GLES20.glViewport(0, 0, bufferWidth, bufferHeight)
+        GLES31.glViewport(0, 0, bufferWidth, bufferHeight)
         // Map Android coordinates to GL coordinates
         Matrix.orthoM(
             mvpMatrix,
@@ -79,7 +79,7 @@ class FastRenderer(
         val bufferWidth = bufferInfo.width
         val bufferHeight = bufferInfo.height
         // define the size of the rectangle for rendering
-        GLES20.glViewport(0, 0, bufferWidth, bufferHeight)
+        GLES31.glViewport(0, 0, bufferWidth, bufferHeight)
         // Computes the ModelViewProjection Matrix
         Matrix.orthoM(
             mvpMatrix,
@@ -95,8 +95,8 @@ class FastRenderer(
         Matrix.multiplyMM(projection, 0, mvpMatrix, 0, transform, 0)
 
         // Clear the screen with black
-        GLES20.glClearColor(1.0f, 1.0f, 1.0f, 1.0f)
-        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT)
+        GLES31.glClearColor(1.0f, 1.0f, 1.0f, 1.0f)
+        GLES31.glClear(GLES31.GL_COLOR_BUFFER_BIT)
 
         editorViewModel.openGlLines.add(params.toList())
 

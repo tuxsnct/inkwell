@@ -29,7 +29,7 @@ android {
         applicationId = "com.tuxsnct.inkwell"
         minSdk = 29
         targetSdk = 33
-        versionCode = 32
+        versionCode = 34
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

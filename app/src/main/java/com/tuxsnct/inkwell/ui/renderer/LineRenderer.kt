@@ -1,7 +1,7 @@
 package com.tuxsnct.inkwell.ui.renderer
 
 import android.graphics.Color
-import android.opengl.GLES20
+import android.opengl.GLES31
 import com.tuxsnct.inkwell.model.renderer.Segment
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
@@ -32,12 +32,12 @@ class LineRenderer {
 
     fun initialize() {
         release()
-        vertexShader = loadShader(GLES20.GL_VERTEX_SHADER, VERTEX_SHADER_CODE)
-        fragmentShader = loadShader(GLES20.GL_FRAGMENT_SHADER, FRAGMENT_SHADER_CODE)
-        glProgram = GLES20.glCreateProgram()
-        GLES20.glAttachShader(glProgram, vertexShader)
-        GLES20.glAttachShader(glProgram, fragmentShader)
-        GLES20.glLinkProgram(glProgram)
+        vertexShader = loadShader(GLES31.GL_VERTEX_SHADER, VERTEX_SHADER_CODE)
+        fragmentShader = loadShader(GLES31.GL_FRAGMENT_SHADER, FRAGMENT_SHADER_CODE)
+        glProgram = GLES31.glCreateProgram()
+        GLES31.glAttachShader(glProgram, vertexShader)
+        GLES31.glAttachShader(glProgram, fragmentShader)
+        GLES31.glLinkProgram(glProgram)
         val bb: ByteBuffer =
             ByteBuffer.allocateDirect( // (number of coordinate values * 4 bytes per float)
                 LINE_COORDS_SIZE * FLOAT_BYTE_SIZE
@@ -49,24 +49,24 @@ class LineRenderer {
             put(lineCoords)
             position(0)
         }
-        positionHandle = GLES20.glGetAttribLocation(glProgram, V_POSITION)
-        mvpMatrixHandle = GLES20.glGetUniformLocation(glProgram, U_MVP_MATRIX)
-        colorHandle = GLES20.glGetUniformLocation(glProgram, V_COLOR)
+        positionHandle = GLES31.glGetAttribLocation(glProgram, V_POSITION)
+        mvpMatrixHandle = GLES31.glGetUniformLocation(glProgram, U_MVP_MATRIX)
+        colorHandle = GLES31.glGetUniformLocation(glProgram, V_COLOR)
 
         isInitialized = true
     }
 
     fun release() {
         if (vertexShader != -1) {
-            GLES20.glDeleteShader(vertexShader)
+            GLES31.glDeleteShader(vertexShader)
             vertexShader = -1
         }
         if (fragmentShader != -1) {
-            GLES20.glDeleteShader(fragmentShader)
+            GLES31.glDeleteShader(fragmentShader)
             fragmentShader = -1
         }
         if (glProgram != -1) {
-            GLES20.glDeleteProgram(glProgram)
+            GLES31.glDeleteProgram(glProgram)
             glProgram = -1
         }
     }
@@ -76,9 +76,9 @@ class LineRenderer {
         line: Collection<Segment>,
         color: Color,
     ) {
-        GLES20.glUseProgram(glProgram)
-        GLES20.glLineWidth(10.0f)
-        GLES20.glEnableVertexAttribArray(positionHandle)
+        GLES31.glUseProgram(glProgram)
+        GLES31.glLineWidth(10.0f)
+        GLES31.glEnableVertexAttribArray(positionHandle)
 
         val colorArray = FloatArray(4)
         // Convert Android color to GL Color
@@ -88,8 +88,8 @@ class LineRenderer {
         colorArray[3] = color.alpha()
 
         // Set color for drawing the line
-        GLES20.glUniform4fv(colorHandle, 1, colorArray, 0)
-        GLES20.glUniformMatrix4fv(mvpMatrixHandle, 1, false, mvpMatrix, 0)
+        GLES31.glUniform4fv(colorHandle, 1, colorArray, 0)
+        GLES31.glUniformMatrix4fv(mvpMatrixHandle, 1, false, mvpMatrix, 0)
         vertexBuffer?.let { buffer ->
             for (vertex in line) {
                 lineCoords[0] = vertex.x1
@@ -102,16 +102,16 @@ class LineRenderer {
                 buffer.position(0)
 
                 // Prepare the triangle coordinate data
-                GLES20.glVertexAttribPointer(
+                GLES31.glVertexAttribPointer(
                     positionHandle, COORDS_PER_VERTEX,
-                    GLES20.GL_FLOAT, false,
+                    GLES31.GL_FLOAT, false,
                     VERTEX_STRIDE, buffer
                 )
                 // Render
-                GLES20.glDrawArrays(GLES20.GL_LINES, 0, VERTEX_COUNT)
+                GLES31.glDrawArrays(GLES31.GL_LINES, 0, VERTEX_COUNT)
             }
         }
-        GLES20.glDisableVertexAttribArray(positionHandle)
+        GLES31.glDisableVertexAttribArray(positionHandle)
     }
 
     companion object {
@@ -142,9 +142,9 @@ class LineRenderer {
             """
 
         fun loadShader(type: Int, shaderCode: String?): Int {
-            val shader = GLES20.glCreateShader(type)
-            GLES20.glShaderSource(shader, shaderCode)
-            GLES20.glCompileShader(shader)
+            val shader = GLES31.glCreateShader(type)
+            GLES31.glShaderSource(shader, shaderCode)
+            GLES31.glCompileShader(shader)
             return shader
         }
     }
