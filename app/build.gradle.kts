@@ -114,7 +114,7 @@ dependencies {
     implementation("com.google.protobuf:protobuf-javalite:3.23.1")
     implementation(platform("com.google.firebase:firebase-bom:32.0.0"))
     implementation("com.google.firebase:firebase-crashlytics:18.3.7")
-    implementation("com.google.firebase:firebase-analytics-ktx:21.2.2")
+    implementation("com.google.firebase:firebase-analytics-ktx:21.3.0")
     implementation("com.google.dagger:hilt-android:${rootProject.extra["hilt_version"]}")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0-alpha01")
     kapt("com.google.dagger:hilt-android-compiler:${rootProject.extra["hilt_version"]}")
