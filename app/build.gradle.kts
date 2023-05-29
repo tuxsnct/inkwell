@@ -112,7 +112,7 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     implementation("androidx.datastore:datastore-preferences-core:1.0.0")
     implementation("com.google.protobuf:protobuf-javalite:3.23.2")
-    implementation(platform("com.google.firebase:firebase-bom:32.0.0"))
+    implementation(platform("com.google.firebase:firebase-bom:32.1.0"))
     implementation("com.google.firebase:firebase-crashlytics:18.3.7")
     implementation("com.google.firebase:firebase-analytics-ktx:21.3.0")
     implementation("com.google.dagger:hilt-android:${rootProject.extra["hilt_version"]}")
