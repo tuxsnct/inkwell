@@ -7,7 +7,7 @@ ext {
 }
 
 buildscript {
-    val agpVersion by extra("8.2.0-alpha05")
+    val agpVersion by extra("8.2.0-alpha06")
     dependencies {
         classpath("com.android.tools.build:gradle:$agpVersion")
         classpath("com.google.android.gms:oss-licenses-plugin:0.10.6")
