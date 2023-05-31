@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "InkWell"
+rootProject.name = "inkwell"
 include ':app'
