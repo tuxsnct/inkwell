@@ -22,6 +22,7 @@ plugins {
 android {
     namespace = "com.tuxsnct.inkwell"
     compileSdk = 33
+    compileSdkPreview = "UpsideDownCake"
     @Suppress("UnstableApiUsage")
     ndkVersion = "25.2.9519653"
 
@@ -29,7 +30,7 @@ android {
         applicationId = "com.tuxsnct.inkwell"
         minSdk = 29
         targetSdk = 33
-        versionCode = 38
+        versionCode = 39
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

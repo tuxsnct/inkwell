@@ -2,6 +2,7 @@ package com.tuxsnct.inkwell.ui.renderer
 
 import android.annotation.SuppressLint
 import android.graphics.Color
+import android.opengl.EGL14
 import android.opengl.GLES31
 import android.opengl.Matrix
 import android.view.MotionEvent
@@ -11,7 +12,10 @@ import androidx.annotation.WorkerThread
 import androidx.graphics.lowlatency.BufferInfo
 import androidx.core.graphics.toColor
 import androidx.graphics.lowlatency.GLFrontBufferedRenderer
+import androidx.graphics.opengl.GLRenderer
+import androidx.graphics.opengl.egl.EGLConfigAttributes
 import androidx.graphics.opengl.egl.EGLManager
+import androidx.graphics.opengl.egl.EGLSpec
 import androidx.input.motionprediction.MotionEventPredictor
 import com.tuxsnct.inkwell.model.renderer.Segment
 import com.tuxsnct.inkwell.ui.viewmodels.EditorViewModel
@@ -23,6 +27,20 @@ class FastRenderer(
     private val mvpMatrix = FloatArray(16)
     private val projection = FloatArray(16)
 
+    private val configAttributes: EGLConfigAttributes = EGLConfigAttributes {
+        EGL14.EGL_LEVEL to 0
+        EGL14.EGL_RENDERABLE_TYPE to 4
+        EGL14.EGL_COLOR_BUFFER_TYPE to EGL14.EGL_RGB_BUFFER
+        EGL14.EGL_RED_SIZE to 8
+        EGL14.EGL_GREEN_SIZE to 8
+        EGL14.EGL_BLUE_SIZE to 8
+        EGL14.EGL_DEPTH_SIZE to 16
+        EGL14.EGL_SAMPLE_BUFFERS to 1
+        EGL14.EGL_SAMPLES to 4
+        EGL14.EGL_NONE
+    }
+
+    private var glRenderer: GLRenderer? = null
     private var frontBufferRenderer: GLFrontBufferedRenderer<Segment>? = null
     private var motionEventPredictor: MotionEventPredictor? = null
 
@@ -107,7 +125,11 @@ class FastRenderer(
     }
 
     fun attachSurfaceView(surfaceView: SurfaceView) {
-        frontBufferRenderer = GLFrontBufferedRenderer(surfaceView, this)
+        glRenderer = GLRenderer(
+            { EGLSpec.V14 },
+            { loadConfig(configAttributes) ?: throw IllegalStateException("Unable to obtain config for 8 bit EGL configuration")  }
+        ).apply { start() }
+        frontBufferRenderer = GLFrontBufferedRenderer(surfaceView, this, glRenderer)
         motionEventPredictor = MotionEventPredictor.newInstance(surfaceView)
     }
 
@@ -116,15 +138,13 @@ class FastRenderer(
     }
 
     fun release() {
+        glRenderer?.stop(false)
         frontBufferRenderer?.release(true)
-        {
-            obtainRenderer().release()
-        }
+        obtainRenderer().release()
     }
 
     @SuppressLint("ClickableViewAccessibility")
     val onTouchListener = View.OnTouchListener { view, event ->
-
         editorViewModel.updateStylusVisualization(event)
         motionEventPredictor?.record(event)
 

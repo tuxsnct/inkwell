@@ -77,7 +77,9 @@ class LineRenderer {
         color: Color,
     ) {
         GLES31.glUseProgram(glProgram)
-        GLES31.glLineWidth(10.0f)
+        GLES31.glEnable(GLES31.GL_BLEND)
+        GLES31.glBlendFunc(GLES31.GL_SRC_ALPHA, GLES31.GL_ONE_MINUS_SRC_ALPHA)
+        GLES31.glLineWidth(1.0f)
         GLES31.glEnableVertexAttribArray(positionHandle)
 
         val colorArray = FloatArray(4)
