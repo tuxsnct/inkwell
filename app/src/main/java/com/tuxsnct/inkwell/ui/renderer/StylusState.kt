@@ -1,6 +1,7 @@
 package com.tuxsnct.inkwell.ui.renderer
 
-import androidx.compose.ui.graphics.Path
+import android.graphics.Path
+
 
 data class StylusState(
     var pressure: Float = 0F,

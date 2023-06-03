@@ -22,6 +22,7 @@ plugins {
 android {
     namespace = "com.tuxsnct.inkwell"
     compileSdk = 33
+    compileSdkPreview = "UpsideDownCake"
     @Suppress("UnstableApiUsage")
     ndkVersion = "25.2.9519653"
 
@@ -29,7 +30,7 @@ android {
         applicationId = "com.tuxsnct.inkwell"
         minSdk = 29
         targetSdk = 33
-        versionCode = 38
+        versionCode = 39
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -88,7 +89,7 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.12.0-alpha04")
+    implementation("androidx.core:core-ktx:1.10.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
@@ -102,6 +103,8 @@ dependencies {
     implementation("androidx.compose.material:material:${rootProject.extra["compose_ui_version"]}")
     implementation("androidx.compose.material:material-icons-extended:${rootProject.extra["compose_ui_version"]}")
     implementation("androidx.graphics:graphics-core:1.0.0-alpha03")
+    implementation("androidx.graphics:graphics-path:1.0.0-alpha01")
+    implementation("androidx.graphics:graphics-shapes:1.0.0-alpha02")
     implementation("androidx.input:input-motionprediction:1.0.0-beta01")
     implementation("com.google.mlkit:digital-ink-recognition:18.1.0")
     implementation("com.google.android.gms:play-services-auth:20.5.0")
@@ -140,7 +143,7 @@ protobuf {
     }
 
     generateProtoTasks {
-        all().forEach() { it ->
+        all().forEach {
             it.builtins {
                 id("java") {
                     option("lite")
