@@ -19,4 +19,9 @@ class LowLatencySurfaceView(context: Context, private val fastRenderer: FastRend
         fastRenderer.release()
         super.onDetachedFromWindow()
     }
+
+    override fun onWindowFocusChanged(hasWindowFocus: Boolean) {
+        super.onWindowFocusChanged(hasWindowFocus)
+        fastRenderer.onWindowFocusChanged(hasWindowFocus)
+    }
 }

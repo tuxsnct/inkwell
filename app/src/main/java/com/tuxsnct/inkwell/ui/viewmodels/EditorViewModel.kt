@@ -44,3 +44,16 @@ class EditorViewModel @Inject constructor() : ViewModel() {
         )
     }
 }
+
+inline fun <T> List<T>.findLastIndex(predicate: (T) -> Boolean): Int {
+    val iterator = this.listIterator(size)
+    var count = 1
+    while (iterator.hasPrevious()) {
+        val element = iterator.previous()
+        if (predicate(element)) {
+            return size - count
+        }
+        count++
+    }
+    return -1
+}

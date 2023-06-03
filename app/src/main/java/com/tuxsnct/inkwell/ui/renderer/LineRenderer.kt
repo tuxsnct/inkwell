@@ -107,6 +107,7 @@ class LineRenderer {
                     GLES20.GL_FLOAT, false,
                     VERTEX_STRIDE, buffer
                 )
+
                 // Render
                 GLES20.glDrawArrays(GLES20.GL_LINES, 0, VERTEX_COUNT)
             }

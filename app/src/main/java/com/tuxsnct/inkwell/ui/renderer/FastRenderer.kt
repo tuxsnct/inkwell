@@ -12,7 +12,7 @@ import androidx.graphics.lowlatency.BufferInfo
 import androidx.core.graphics.toColor
 import androidx.graphics.lowlatency.GLFrontBufferedRenderer
 import androidx.graphics.opengl.egl.EGLManager
-import androidx.input.motionprediction.MotionEventPredictor
+// import androidx.input.motionprediction.MotionEventPredictor
 import com.tuxsnct.inkwell.model.renderer.Segment
 import com.tuxsnct.inkwell.ui.viewmodels.EditorViewModel
 
@@ -24,7 +24,7 @@ class FastRenderer(
     private val projection = FloatArray(16)
 
     private var frontBufferRenderer: GLFrontBufferedRenderer<Segment>? = null
-    private var motionEventPredictor: MotionEventPredictor? = null
+    // private var motionEventPredictor: MotionEventPredictor? = null
 
     private var lineRenderer: LineRenderer = LineRenderer()
 
@@ -53,6 +53,7 @@ class FastRenderer(
         val bufferWidth = bufferInfo.width
         val bufferHeight = bufferInfo.height
         GLES20.glViewport(0, 0, bufferWidth, bufferHeight)
+
         // Map Android coordinates to GL coordinates
         Matrix.orthoM(
             mvpMatrix,
@@ -64,7 +65,6 @@ class FastRenderer(
             -1f,
             1f
         )
-
         Matrix.multiplyMM(projection, 0, mvpMatrix, 0, transform, 0)
 
         obtainRenderer().drawLine(projection, listOf(param), Color.BLACK.toColor())
@@ -78,8 +78,8 @@ class FastRenderer(
     ) {
         val bufferWidth = bufferInfo.width
         val bufferHeight = bufferInfo.height
-        // define the size of the rectangle for rendering
         GLES20.glViewport(0, 0, bufferWidth, bufferHeight)
+
         // Computes the ModelViewProjection Matrix
         Matrix.orthoM(
             mvpMatrix,
@@ -108,7 +108,7 @@ class FastRenderer(
 
     fun attachSurfaceView(surfaceView: SurfaceView) {
         frontBufferRenderer = GLFrontBufferedRenderer(surfaceView, this)
-        motionEventPredictor = MotionEventPredictor.newInstance(surfaceView)
+        // motionEventPredictor = MotionEventPredictor.newInstance(surfaceView)
     }
 
     fun initialize() {
@@ -117,16 +117,18 @@ class FastRenderer(
 
     fun release() {
         frontBufferRenderer?.release(true)
-        {
-            obtainRenderer().release()
-        }
+        obtainRenderer().release()
+    }
+
+    fun onWindowFocusChanged(hasWindowFocus: Boolean) {
+        if (hasWindowFocus) frontBufferRenderer?.commit()
     }
 
     @SuppressLint("ClickableViewAccessibility")
     val onTouchListener = View.OnTouchListener { view, event ->
 
         editorViewModel.updateStylusVisualization(event)
-        motionEventPredictor?.record(event)
+        // motionEventPredictor?.record(event)
 
         when (event?.action) {
             MotionEvent.ACTION_DOWN -> {
@@ -154,15 +156,20 @@ class FastRenderer(
                 // Send the short line to front buffered layer: fast rendering
                 frontBufferRenderer?.renderFrontBufferedLayer(segment)
 
+                /*
                 val motionEventPredicted = motionEventPredictor?.predict()
                 if(motionEventPredicted != null) {
                     val predictedSegment = Segment(currentX, currentY,
                         motionEventPredicted.x, motionEventPredicted.y)
                     frontBufferRenderer?.renderFrontBufferedLayer(predictedSegment)
                 }
+                 */
             }
             MotionEvent.ACTION_UP -> {
                 frontBufferRenderer?.commit()
+            }
+            MotionEvent.ACTION_CANCEL -> {
+                frontBufferRenderer?.cancel()
             }
         }
         true
