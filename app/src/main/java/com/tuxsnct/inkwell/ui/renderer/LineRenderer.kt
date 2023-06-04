@@ -77,7 +77,7 @@ class LineRenderer {
         color: Color,
     ) {
         GLES20.glUseProgram(glProgram)
-        GLES20.glLineWidth(10.0f)
+        GLES20.glLineWidth(1.0f)
         GLES20.glEnableVertexAttribArray(positionHandle)
 
         val colorArray = FloatArray(4)
