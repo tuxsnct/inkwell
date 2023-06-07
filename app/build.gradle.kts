@@ -104,7 +104,7 @@ dependencies {
     implementation("androidx.compose.material:material-icons-extended:${rootProject.extra["compose_ui_version"]}")
     implementation("androidx.graphics:graphics-core:1.0.0-alpha03")
     implementation("androidx.graphics:graphics-path:1.0.0-alpha01")
-    implementation("androidx.graphics:graphics-shapes:1.0.0-alpha02")
+    implementation("androidx.graphics:graphics-shapes:1.0.0-alpha03")
     implementation("androidx.input:input-motionprediction:1.0.0-beta01")
     implementation("com.google.mlkit:digital-ink-recognition:18.1.0")
     implementation("com.google.android.gms:play-services-auth:20.5.0")
