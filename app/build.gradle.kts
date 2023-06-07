@@ -102,7 +102,7 @@ dependencies {
     implementation("androidx.compose.material3:material3-window-size-class:${rootProject.extra["compose_material3_version"]}")
     implementation("androidx.compose.material:material:${rootProject.extra["compose_ui_version"]}")
     implementation("androidx.compose.material:material-icons-extended:${rootProject.extra["compose_ui_version"]}")
-    implementation("androidx.graphics:graphics-core:1.0.0-alpha03")
+    implementation("androidx.graphics:graphics-core:1.0.0-alpha04")
     implementation("androidx.graphics:graphics-path:1.0.0-alpha01")
     implementation("androidx.graphics:graphics-shapes:1.0.0-alpha02")
     implementation("androidx.input:input-motionprediction:1.0.0-beta01")
