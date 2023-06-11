@@ -36,7 +36,7 @@ fun EditorScreen(
     val lifecycleOwner = LocalLifecycleOwner.current
 
     LaunchedEffect(lifecycleOwner) {
-        editorViewModel.openGlLines.removeAll { true }
+        editorViewModel.canvasLines.removeAll { true }
         editorViewModel.folder.observe(lifecycleOwner) {
             fileName = "${it.type} ${it.file.nameWithoutExtension}"
         }

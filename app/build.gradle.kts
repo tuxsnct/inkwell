@@ -23,14 +23,13 @@ android {
     namespace = "com.tuxsnct.inkwell"
     compileSdk = 33
     compileSdkPreview = "UpsideDownCake"
-    @Suppress("UnstableApiUsage")
     ndkVersion = "25.2.9519653"
 
     defaultConfig {
         applicationId = "com.tuxsnct.inkwell"
         minSdk = 29
         targetSdk = 33
-        versionCode = 39
+        versionCode = 38
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -44,7 +43,6 @@ android {
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
-            @Suppress("UnstableApiUsage")
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             ndk { debugSymbolLevel = "SYMBOL_TABLE" }
         }
@@ -63,7 +61,6 @@ android {
         jvmTarget = "17"
     }
 
-    @Suppress("UnstableApiUsage")
     buildFeatures {
         compose = true
     }
@@ -89,12 +86,12 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.10.1")
+    implementation("androidx.core:core-ktx:1.12.0-alpha05")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
     implementation("androidx.activity:activity-compose:1.7.2")
-    implementation("androidx.navigation:navigation-compose:2.5.3")
+    implementation("androidx.navigation:navigation-compose:2.6.0")
     implementation("androidx.core:core-splashscreen:1.0.1")
     implementation("androidx.compose.ui:ui:${rootProject.extra["compose_ui_version"]}")
     implementation("androidx.compose.ui:ui-tooling-preview:${rootProject.extra["compose_ui_version"]}")
@@ -102,9 +99,9 @@ dependencies {
     implementation("androidx.compose.material3:material3-window-size-class:${rootProject.extra["compose_material3_version"]}")
     implementation("androidx.compose.material:material:${rootProject.extra["compose_ui_version"]}")
     implementation("androidx.compose.material:material-icons-extended:${rootProject.extra["compose_ui_version"]}")
-    implementation("androidx.graphics:graphics-core:1.0.0-alpha03")
-    implementation("androidx.graphics:graphics-path:1.0.0-alpha01")
-    implementation("androidx.graphics:graphics-shapes:1.0.0-alpha02")
+    implementation("androidx.graphics:graphics-core:1.0.0-alpha04")
+    implementation("androidx.graphics:graphics-path:1.0.0-alpha02")
+    implementation("androidx.graphics:graphics-shapes:1.0.0-alpha03")
     implementation("androidx.input:input-motionprediction:1.0.0-beta01")
     implementation("com.google.mlkit:digital-ink-recognition:18.1.0")
     implementation("com.google.android.gms:play-services-auth:20.5.0")

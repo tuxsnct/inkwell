@@ -20,7 +20,7 @@ fun EditorRenderer(
         StylusVisualization(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(150.dp),
+                .height(110.dp),
             stylusState = stylusState
         )
         Divider(

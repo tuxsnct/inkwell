@@ -22,7 +22,7 @@ class EditorViewModel @Inject constructor() : ViewModel() {
 
     private var _stylusState = MutableStateFlow(StylusState())
     val stylusState: StateFlow<StylusState> = _stylusState
-    val openGlLines = mutableListOf<List<Segment>>()
+    val canvasLines = mutableListOf<List<Segment>>()
 
     private fun requestRendering(stylusState: StylusState) {
         _stylusState.update {
