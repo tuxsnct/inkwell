@@ -8,7 +8,7 @@ import com.tuxsnct.inkwell.ui.renderer.LowLatencySurfaceView
 
 @Composable
 fun DrawAreaLowLatency(modifier: Modifier = Modifier, fastRenderer: FastRenderer) {
-    AndroidView(factory = { context ->
+    AndroidView(modifier = modifier, factory = { context ->
         LowLatencySurfaceView(context, fastRenderer)
-    }, modifier = modifier)
+    })
 }

@@ -5,10 +5,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
+import com.tuxsnct.inkwell.ui.navigations.RootNavGraph
+import com.tuxsnct.inkwell.ui.theme.InkWellTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,9 +21,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            InkWellApp(
-                calculateWindowSizeClass(this).widthSizeClass == WindowWidthSizeClass.Compact
-            )
+            InkWellTheme {
+                RootNavGraph(calculateWindowSizeClass(this).widthSizeClass)
+            }
         }
     }
 

@@ -13,7 +13,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.tuxsnct.inkwell.model.file.Folder
 import com.tuxsnct.inkwell.model.file.Note
-import com.tuxsnct.inkwell.utils.CompletePreviews
+import com.tuxsnct.inkwell.utils.AllPreviews
 import java.io.File
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,7 +54,7 @@ fun ManagerFilesGrid(
     }
 }
 
-@CompletePreviews
+@AllPreviews
 @Composable
 fun ManagerFilesGridPreview() {
     val files = (1..10).map {

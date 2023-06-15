@@ -4,71 +4,70 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.repeatOnLifecycle
-import com.tuxsnct.inkwell.ui.components.editor.EditorAppBar
-import com.tuxsnct.inkwell.ui.components.editor.EditorRenderer
+import com.tuxsnct.inkwell.ui.components.editor.DrawAreaLowLatency
+import com.tuxsnct.inkwell.ui.components.editor.EditorToolBar
 import com.tuxsnct.inkwell.ui.renderer.FastRenderer
-import com.tuxsnct.inkwell.ui.renderer.StylusState
+import com.tuxsnct.inkwell.ui.renderer.ToolType
 import com.tuxsnct.inkwell.ui.viewmodels.EditorViewModel
-import com.tuxsnct.inkwell.utils.CompletePreviews
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onEach
+import com.tuxsnct.inkwell.utils.AllPreviews
+import com.tuxsnct.inkwell.utils.PreviewWidthSizeProvider
 
 @Composable
 fun EditorScreen(
-    isCompact: Boolean,
-    popBackStack: () -> Unit,
+    widthSizeClass: WindowWidthSizeClass,
     editorViewModel: EditorViewModel = hiltViewModel()
 ) {
-    var fileName by remember { mutableStateOf("") }
-    var stylusState by remember { mutableStateOf(StylusState()) }
-    val fastRenderer = FastRenderer(editorViewModel)
     val lifecycleOwner = LocalLifecycleOwner.current
+    var isInitialized by rememberSaveable { mutableStateOf(false) }
+    val fastRenderer by remember { mutableStateOf(FastRenderer(editorViewModel)) }
+    var folderName by remember { mutableStateOf("") }
+    var toolType by remember { mutableStateOf(ToolType.PEN) }
 
-    LaunchedEffect(lifecycleOwner) {
-        editorViewModel.canvasLines.removeAll { true }
-        editorViewModel.folder.observe(lifecycleOwner) {
-            fileName = "${it.type} ${it.file.nameWithoutExtension}"
+    LaunchedEffect(Unit) {
+        if (!isInitialized) {
+            editorViewModel.canvasLines.clear()
+            isInitialized = true
         }
-        fastRenderer.initialize()
-        lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-            editorViewModel.stylusState
-                .onEach {
-                    stylusState = it
-                }
-                .collect()
-        }
+        editorViewModel.folderName.observe(lifecycleOwner) { folderName = it }
+        editorViewModel.toolType.observe(lifecycleOwner) { toolType = it }
+        fastRenderer.commit()
     }
 
-    Scaffold(
-        topBar = { EditorAppBar(fileName, popBackStack) }
-    ) { contentPadding ->
-        Box(modifier = Modifier
-            .padding(contentPadding)
-            .fillMaxSize()) {
-            EditorRenderer(fastRenderer, stylusState)
+    Scaffold { contentPadding ->
+        EditorToolBar(
+            modifier = Modifier.zIndex(1F),
+            widthSizeClass = widthSizeClass,
+            title = folderName,
+            toolType = toolType,
+            onToolTypeButtonClick = { editorViewModel.changeToolType(it) }
+        )
+        Box(
+            modifier = Modifier
+                .padding(contentPadding)
+                .fillMaxSize()
+        ) {
+            DrawAreaLowLatency(modifier = Modifier, fastRenderer = fastRenderer)
         }
     }
 }
 
-@CompletePreviews
+@AllPreviews
 @Composable
-fun CompactEditorScreenPreview() {
-    EditorScreen(false, {})
-}
-
-@CompletePreviews
-@Composable
-fun ExpandedEditorScreenPreview() {
-    EditorScreen(true, {})
+fun EditorScreenPreview(
+    @PreviewParameter(PreviewWidthSizeProvider::class) widthSizeClass: WindowWidthSizeClass
+) {
+    EditorScreen(widthSizeClass)
 }

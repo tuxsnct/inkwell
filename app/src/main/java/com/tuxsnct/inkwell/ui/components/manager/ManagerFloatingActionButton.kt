@@ -6,7 +6,7 @@ import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import com.tuxsnct.inkwell.utils.CompletePreviews
+import com.tuxsnct.inkwell.utils.AllPreviews
 
 @Composable
 fun ManagerFloatingActionButton(
@@ -19,7 +19,7 @@ fun ManagerFloatingActionButton(
     )
 }
 
-@CompletePreviews
+@AllPreviews
 @Composable
 fun ManagerFloatingActionButtonPreview() {
     ManagerFloatingActionButton {}

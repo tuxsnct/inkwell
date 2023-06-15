@@ -1,5 +1,6 @@
 package com.tuxsnct.inkwell.ui.navigations
 
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -10,7 +11,7 @@ import com.tuxsnct.inkwell.ui.views.*
 
 @Composable
 fun RootNavGraph(
-    isCompact: Boolean,
+    widthSizeClass: WindowWidthSizeClass,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
     startDestination: String = RootDestinations.MANAGER.name
@@ -24,7 +25,7 @@ fun RootNavGraph(
     ) {
         composable(RootDestinations.MANAGER.name) {
             ManagerScreen(
-                isCompact,
+                widthSizeClass,
                 rootNavActions.navigateToSearch,
                 rootNavActions.navigateToSettings,
                 rootNavActions.navigateToEditor
@@ -32,19 +33,18 @@ fun RootNavGraph(
         }
         composable(RootDestinations.EDITOR.name) {
             EditorScreen(
-                isCompact,
-                rootNavActions.popBackStack
+                widthSizeClass
             )
         }
         composable(RootDestinations.SEARCH.name) {
             SearchScreen(
-                isCompact,
+                widthSizeClass,
                 rootNavActions.popBackStack
             )
         }
         composable(RootDestinations.SETTINGS.name) {
             SettingsScreen(
-                isCompact,
+                widthSizeClass,
                 rootNavActions.popBackStack
             )
         }

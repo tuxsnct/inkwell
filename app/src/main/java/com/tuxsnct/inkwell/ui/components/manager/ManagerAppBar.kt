@@ -6,22 +6,25 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Tab
 import androidx.compose.material3.*
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.tuxsnct.inkwell.ui.MainActivity
-import com.tuxsnct.inkwell.utils.CompletePreviews
+import com.tuxsnct.inkwell.utils.AllPreviews
+import com.tuxsnct.inkwell.utils.PreviewWidthSizeProvider
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ManagerAppBar(
-    isCompact: Boolean,
+    widthSizeClass: WindowWidthSizeClass,
     onSearchClick: () -> Unit,
     onSettingsClick: () -> Unit
 ) {
-    val context = LocalContext.current as MainActivity
+    val context = LocalContext.current
 
     TopAppBar(
         title = {
@@ -30,7 +33,7 @@ fun ManagerAppBar(
                 horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.Start),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                if (!isCompact) {
+                if (widthSizeClass != WindowWidthSizeClass.Compact) {
                     Text("InkWell")
                 }
                 FilledTonalButton(
@@ -49,8 +52,8 @@ fun ManagerAppBar(
         },
         actions = {
             Spacer(Modifier.width(8.dp))
-            if (!isCompact) {
-                IconButton(onClick = { context.openNewIntent() }) {
+            if (widthSizeClass != WindowWidthSizeClass.Compact) {
+                IconButton(onClick = { (context as MainActivity).openNewIntent() }) {
                     Icon(Icons.Default.Tab, contentDescription = "Tabs")
                 }
             }
@@ -62,14 +65,10 @@ fun ManagerAppBar(
     )
 }
 
-@CompletePreviews
+@AllPreviews
 @Composable
-fun CompactManagerAppBarPreview() {
-    ManagerAppBar(true, onSearchClick = {}, onSettingsClick = { })
-}
-
-@CompletePreviews
-@Composable
-fun ExpandedManagerAppBarPreview() {
-    ManagerAppBar(false, onSearchClick = {}, onSettingsClick = { })
+fun ManagerAppBarPreview(
+    @PreviewParameter(PreviewWidthSizeProvider::class) widthSizeClass: WindowWidthSizeClass
+) {
+    ManagerAppBar(widthSizeClass, onSearchClick = {}, onSettingsClick = { })
 }

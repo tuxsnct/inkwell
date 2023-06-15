@@ -5,8 +5,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Book
 import androidx.compose.material.icons.filled.Description
 import androidx.compose.material3.*
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -21,12 +23,13 @@ import com.tuxsnct.inkwell.ui.components.manager.ManagerTabItem
 import com.tuxsnct.inkwell.ui.navigations.ManagerDestinations
 import com.tuxsnct.inkwell.ui.navigations.ManagerNavGraph
 import com.tuxsnct.inkwell.ui.viewmodels.ManagerViewModel
-import com.tuxsnct.inkwell.utils.CompletePreviews
+import com.tuxsnct.inkwell.utils.AllPreviews
+import com.tuxsnct.inkwell.utils.PreviewWidthSizeProvider
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ManagerScreen(
-    isCompact: Boolean,
+    widthSizeClass: WindowWidthSizeClass,
     navigateToSearch: () -> Unit,
     navigateToSettings: () -> Unit,
     navigateToEditor: () -> Unit,
@@ -60,9 +63,9 @@ fun ManagerScreen(
     }
 
     Scaffold(
-        topBar = { ManagerAppBar(isCompact, navigateToSearch, navigateToSettings) },
+        topBar = { ManagerAppBar(widthSizeClass, navigateToSearch, navigateToSettings) },
         bottomBar = {
-            if (isCompact) {
+            if (widthSizeClass == WindowWidthSizeClass.Compact) {
                 ResponsiveNavigation(
                     ResponsiveNavigationType.NavigationBar,
                     tabs,
@@ -75,7 +78,7 @@ fun ManagerScreen(
         }
     ) { contentPadding ->
         Row(modifier = Modifier.padding(contentPadding)) {
-            if (!isCompact) {
+            if (widthSizeClass != WindowWidthSizeClass.Compact) {
                 ResponsiveNavigation(
                     ResponsiveNavigationType.NavigationRail,
                     tabs,
@@ -94,14 +97,10 @@ fun ManagerScreen(
     }
 }
 
-@CompletePreviews
+@AllPreviews
 @Composable
-fun CompactManagerScreenPreview() {
-    ManagerScreen(true, {}, {}, {})
-}
-
-@CompletePreviews
-@Composable
-fun ExpandedManagerScreenPreview() {
-    ManagerScreen(true, {}, {}, {})
+fun ExpandedManagerScreenPreview(
+    @PreviewParameter(PreviewWidthSizeProvider::class) windowWidthSizeClass: WindowWidthSizeClass
+) {
+    ManagerScreen(windowWidthSizeClass, {}, {}, {})
 }

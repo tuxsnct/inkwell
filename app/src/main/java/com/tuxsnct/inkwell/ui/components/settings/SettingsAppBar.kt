@@ -4,7 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import com.tuxsnct.inkwell.utils.CompletePreviews
+import com.tuxsnct.inkwell.utils.AllPreviews
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -21,7 +21,7 @@ fun SettingsAppBar(
     )
 }
 
-@CompletePreviews
+@AllPreviews
 @Composable
 fun SettingsAppBarPreview() {
     SettingsAppBar { }

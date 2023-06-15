@@ -5,15 +5,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.tuxsnct.inkwell.ui.components.settings.SettingsAppBar
-import com.tuxsnct.inkwell.utils.CompletePreviews
+import com.tuxsnct.inkwell.utils.AllPreviews
+import com.tuxsnct.inkwell.utils.PreviewWidthSizeProvider
 
 @Composable
 fun SettingsScreen(
-    isCompact: Boolean,
+    widthSizeClass: WindowWidthSizeClass,
     onClickBack: () -> Unit
 ) {
     Scaffold(
@@ -27,14 +30,10 @@ fun SettingsScreen(
     }
 }
 
-@CompletePreviews
+@AllPreviews
 @Composable
-fun CompactSettingsScreenPreview() {
-    SettingsScreen(true) {}
-}
-
-@CompletePreviews
-@Composable
-fun ExpandedSettingsScreenPreview() {
-    SettingsScreen(false) {}
+fun SettingsScreenPreview(
+    @PreviewParameter(PreviewWidthSizeProvider::class) widthSizeClass: WindowWidthSizeClass
+) {
+    SettingsScreen(widthSizeClass) {}
 }
