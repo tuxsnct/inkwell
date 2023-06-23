@@ -106,7 +106,7 @@ dependencies {
     implementation("com.google.mlkit:digital-ink-recognition:18.1.0")
     implementation("com.google.android.gms:play-services-auth:20.5.0")
     implementation("com.google.android.gms:play-services-oss-licenses:17.0.1")
-    implementation("com.android.billingclient:billing-ktx:6.0.0")
+    implementation("com.android.billingclient:billing-ktx:6.0.1")
     implementation("androidx.datastore:datastore:1.0.0")
     implementation("androidx.datastore:datastore-core:1.0.0")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
