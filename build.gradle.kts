@@ -11,7 +11,7 @@ buildscript {
         classpath("com.android.tools.build:gradle:8.2.0-alpha08")
         classpath("com.google.android.gms:oss-licenses-plugin:0.10.6")
         classpath("com.google.gms:google-services:4.3.15")
-        classpath("com.google.firebase:firebase-crashlytics-gradle:2.9.5")
+        classpath("com.google.firebase:firebase-crashlytics-gradle:2.9.9")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.21")
         classpath("com.google.protobuf:protobuf-gradle-plugin:0.9.3")
     }
