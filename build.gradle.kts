@@ -2,7 +2,7 @@ ext {
     extra["kotlin_version"] = "1.8.10"
     extra["hilt_version"] = "2.46.1"
     extra["compose_compiler_version"] = "1.4.7"
-    extra["compose_material3_version"] = "1.2.0-alpha02"
+    extra["compose_material3_version"] = "1.2.0-alpha07"
     extra["compose_ui_version"] = "1.5.0-beta02"
 }
 
