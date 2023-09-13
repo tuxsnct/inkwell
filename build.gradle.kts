@@ -24,7 +24,7 @@ buildscript {
 
 plugins {
     id("com.android.application") version "8.2.0-alpha08" apply false
-    id("com.android.library") version "8.2.0-alpha08" apply false
+    id("com.android.library") version "8.2.0-beta04" apply false
     id("org.jetbrains.kotlin.android") version "1.8.21" apply false
     id("com.google.dagger.hilt.android") version "2.46.1" apply false
     id("com.google.protobuf") version "0.9.3" apply false
